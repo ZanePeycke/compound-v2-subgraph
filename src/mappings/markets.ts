@@ -21,6 +21,7 @@ import {
 let cUSDCAddress = '0x39aa39c021dfbae8fac545936693ac917d5e7563'
 let cETHAddress = '0x4ddc2d193948926d02f9b1fe9e1daa0718270ed5'
 let daiAddress = '0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359'
+let mkrAddress = '0x9f8f72aa9304c8b593d555f12ef6589cc3a579a2'
 
 // Used for all cERC20 contracts
 function getTokenPrice(
@@ -118,18 +119,21 @@ export function createMarket(marketAddress: string): Market {
     market.underlyingName = 'Ether'
     market.underlyingSymbol = 'ETH'
     market.underlyingPriceUSD = zeroBD
-    // It is all other CERC20 contracts
   } else {
     market = new Market(marketAddress)
     market.underlyingAddress = contract.underlying()
     let underlyingContract = ERC20.bind(market.underlyingAddress as Address)
     market.underlyingDecimals = underlyingContract.decimals()
-    if (market.underlyingAddress.toHexString() != daiAddress) {
-      market.underlyingName = underlyingContract.name()
-      market.underlyingSymbol = underlyingContract.symbol()
-    } else {
+    if (market.underlyingAddress.toHexString() == daiAddress) {
       market.underlyingName = 'Dai Stablecoin v1.0 (DAI)'
       market.underlyingSymbol = 'DAI'
+
+    } else if (market.underlyingAddress.toHexString() == mkrAddress){
+      market.underlyingName = 'Maker'
+      market.underlyingSymbol = 'MKR'
+    } else {
+      market.underlyingName = underlyingContract.name()
+      market.underlyingSymbol = underlyingContract.symbol()
     }
     market.underlyingPriceUSD = zeroBD
     market.underlyingPrice = zeroBD

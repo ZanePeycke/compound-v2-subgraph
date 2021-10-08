@@ -16,15 +16,11 @@ import { Market, Comptroller, Account } from '../types/schema'
 import { mantissaFactorBD, updateCommonCTokenStats, createAccount } from './helpers'
 import { createMarket } from './markets'
 
-let invalid_markets: string[] = ['0x95b4ef2869ebd94beb4eee400a99824bf5dc325b']
+//let invalid_markets: string[] = ['0x95b4ef2869ebd94beb4eee400a99824bf5dc325b']
 //Compound Maker (cMKR) is causing some issue that prevents our subgraph from syncing
 //While we investigate the market is excluded from indexing.
 
 export function handleMarketListed(event: MarketListed): void {
-  // Is the market in our invalid list? If so return, otherwise proceed
-  if (invalid_markets.indexOf(event.params.cToken.toHexString()) !== -1) {
-    return
-  }
   // Dynamically index all new listed tokens
   CToken.create(event.params.cToken)
   // Create the market for this token, since it's now been listed.
