@@ -131,7 +131,7 @@ export function createMarket(marketAddress: string): Market {
     } else if (market.underlyingAddress.toHexString() == mkrAddress){
       market.underlyingName = 'Maker'
       market.underlyingSymbol = 'MKR'
-    } else {
+    }  else {
       market.underlyingName = underlyingContract.name()
       market.underlyingSymbol = underlyingContract.symbol()
     }
