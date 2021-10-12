@@ -4,7 +4,7 @@
 
 ## Networks and Performance
 
-This subgraph can be found on The Graph Hosted Service at https://thegraph.com/explorer/subgraph/graphprotocol/compound-v2.
+This subgraph can be found on The Graph Hosted Service at https://thegraph.com/hosted-service/subgraph/zanepeycke/compound-v2-legacy.
 
 You can also run this subgraph locally, if you wish. Instructions for that can be found in [The Graph Documentation](https://thegraph.com/docs/quick-start).
 
