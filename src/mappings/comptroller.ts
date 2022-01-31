@@ -60,7 +60,9 @@ let valid_markets: string[] = ['0x3fda67f7583380e67ef93072294a7fac882fd7e7',
                                 '0x12392f67bdf24fae0af363c24ac620a2f67dad86',
                                 '0xccf4429db6322d5c611ee964527d42e5d685dd6a',
                                 '0x80a2ae356fc9ef4305676f7a3e2ed04e12c33946',
-                                '0x6d903f6003cca6255d85cca4d3b5e5146dc33925']
+                                '0x6d903f6003cca6255d85cca4d3b5e5146dc33925',
+                                '0x041171993284df560249b57358f931d9eb7b925d' //cUSDP
+                            ]
 
 
 export function handleMarketListed(event: MarketListed): void {
