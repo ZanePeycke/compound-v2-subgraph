@@ -15,7 +15,7 @@ import { CToken } from '../types/templates'
 import { Market, Comptroller, Account } from '../types/schema'
 import { mantissaFactorBD, updateCommonCTokenStats, createAccount } from './helpers'
 import { createMarket } from './markets'
-import { log } from '@graphprotocol/graph-ts'
+import { Address, log } from '@graphprotocol/graph-ts'
 
 //I am having some issues with try catch statements for safer handling of new markets
 //See handleMarketListed for more details
@@ -62,8 +62,8 @@ let valid_markets: string[] = ['0x3fda67f7583380e67ef93072294a7fac882fd7e7',
                                 '0x80a2ae356fc9ef4305676f7a3e2ed04e12c33946',
                                 '0x6d903f6003cca6255d85cca4d3b5e5146dc33925',
                                 '0x041171993284df560249b57358f931d9eb7b925d', //cUSDP
-                                '0x7713dd9ca933848f6819f38b8352d9a15ea73f67'  //cFEI
-                            ]
+                                '0x7713dd9ca933848f6819f38b8352d9a15ea73f67'//cFEI
+                              ]
 
 
 export function handleMarketListed(event: MarketListed): void {
@@ -171,6 +171,14 @@ export function handleNewPriceOracle(event: NewPriceOracle): void {
   if (comptroller == null) {
     comptroller = new Comptroller('1')
   }
+  // To resolve issues introduced by governance proposal 117 and 119 we will temporarily
+  // Not consider the new oracle https://etherscan.io/tx/0x58ad039bedcf34caf010bc9513435b16856c9ec1a0b7e46cad3422264120ddf4
+  // If this oracle is fixed and redeployed at the same address, we will omit this in the future
+  let new_Price_Oracle_Address = event.parameters[1].value.toAddress()
+  if (new_Price_Oracle_Address == Address.fromString('0xAd47d5A59B6d1Ca4DC3EbD53693fdA7d7449f165')){
+    comptroller.save()
+  } else {
   comptroller.priceOracle = event.params.newPriceOracle
   comptroller.save()
+  }
 }
